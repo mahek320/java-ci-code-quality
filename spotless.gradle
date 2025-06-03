@@ -1,7 +1,0 @@
-spotless {
-    java {
-        googleJavaFormat()
-        target 'src/**/*.java'
-    }
-}
-
