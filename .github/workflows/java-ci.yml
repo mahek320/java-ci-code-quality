@@ -38,6 +38,9 @@ jobs:
     - name: Run OWASP Dependency-Check
       run: mvn org.owasp:dependency-check-maven:aggregate || true
 
+    - name: Generate JaCoCo Coverage Report
+      run: mvn jacoco:report 
+
     - name: Upload CI Reports
       if: always()
       uses: actions/upload-artifact@v4
@@ -47,6 +50,7 @@ jobs:
           target/spotbugsXml.xml
           target/checkstyle-result.xml
           target/dependency-check-report.html
+          target/jacoco-html/index.html
 
     - name: SonarQube Scan
       env:
