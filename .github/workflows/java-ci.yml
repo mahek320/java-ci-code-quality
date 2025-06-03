@@ -1,1 +1,92 @@
+name: Java CI Pipeline
 
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-maven
+
+    - name: Build and run tests
+      run: mvn clean install --no-transfer-progress
+
+    - name: Run Spotless (Code Formatter)
+      run: mvn spotless:check || true
+
+    - name: Run Checkstyle (Code Style Checker)
+      run: mvn checkstyle:check || true
+
+    - name: Run SpotBugs (Static Analysis)
+      run: mvn com.github.spotbugs:spotbugs-maven-plugin:spotbugs || true
+
+    - name: Run OWASP Dependency-Check
+      run: mvn org.owasp:dependency-check-maven:aggregate || true
+
+    - name: Upload CI Reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Java CI Reports
+        path: |
+          target/spotbugsXml.xml
+          target/checkstyle-result.xml
+          target/dependency-check-report.html
+
+    - name: SonarQube Scan
+      env:
+        SONAR_URL: https://sonarcloud.io/
+        SONAR_PROJECT_KEY: mahek320_java-ci-code-quality
+        SONAR_SOURCES: src/main/java
+      run: |
+        wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610.zip -O sonar-scanner-cli.zip
+        unzip sonar-scanner-cli.zip
+        mv sonar-scanner-6.2.1.4610 sonar-scanner
+        chmod -R 777 sonar-scanner
+        ./sonar-scanner/bin/sonar-scanner -X \
+          -Dsonar.issuesReport.console.enable=true \
+          -Dsonar.host.url=${{ env.SONAR_URL }} \
+          -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
+          -Dsonar.sources=${{ env.SONAR_SOURCES }} \
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+          -Dsonar.sourceEncoding=UTF-8 \
+          -Dsonar.verbose=true \
+          -Dsonar.organization=mahek320
+
+    - name: Send Email Notification
+      if: always()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.SENDER_MAIL }}
+        password: ${{ secrets.SENDER_PASSWORD }}
+        subject: "CI Report and SonarQube Dashboard - Java CI"
+        to: ${{ secrets.RECEIVER_MAIL }}
+        from: GitHub Actions ${{ secrets.SENDER_MAIL }}
+        body: |
+          Hello,
+          The Java CI pipeline has completed. Please find the reports and SonarQube dashboard below:
+          - SonarQube Dashboard: https://sonarcloud.io/project/overview?id=mahek320_java-ci-code-quality
+          - SpotBugs, Checkstyle, and Dependency-Check reports are attached.
+          Regards,
+          GitHub Actions
+        attachments: |
+          target/spotbugsXml.xml
+          target/checkstyle-result.xml
+          target/dependency-check-report.html
