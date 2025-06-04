@@ -38,10 +38,11 @@ jobs:
     - name: Run OWASP Dependency-Check
       run: mvn org.owasp:dependency-check-maven:aggregate || true
 
-
     - name: Generate JaCoCo Coverage Report
       run: mvn verify
 
+    - name: Debug - List JaCoCo Report Files
+      run: ls -R target/site/jacoco || echo "JaCoCo report not found"
 
     - name: Upload CI Reports
       if: always()
