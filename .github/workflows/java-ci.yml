@@ -41,6 +41,10 @@ jobs:
     - name: Generate JaCoCo Coverage Report
       run: mvn verify
 
+    - name: Debug - List Test Files
+      run: find src/test -name "*.java" || echo "No test files found"
+
+
     - name: Debug - List JaCoCo Report Files
       run: ls -R target/site/jacoco || echo "JaCoCo report not found"
 
