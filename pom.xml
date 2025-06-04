@@ -116,9 +116,6 @@
 <goals>
 <goal>report</goal>
 </goals>
-<configuration>
-<outputDirectory>${project.build.directory}/jacoco-html</outputDirectory>
-</configuration>
 </execution>
 </executions>
 </plugin>
