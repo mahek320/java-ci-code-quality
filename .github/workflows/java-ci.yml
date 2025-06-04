@@ -85,7 +85,7 @@ jobs:
         password: ${{ secrets.SENDER_PASSWORD }}
         subject: "CI Report and SonarQube Dashboard - Java CI"
         to: ${{ secrets.RECEIVER_MAIL }}
-        from: GitHub Actions ${{ secrets.SENDER_MAIL }}
+        from: GitHub Actions ${{ secrets.SENDER_MAIL }} 
         body: |
           Hello,
           The Java CI pipeline has completed. Please find the reports and SonarQube dashboard below:
