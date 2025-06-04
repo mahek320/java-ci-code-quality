@@ -38,8 +38,10 @@ jobs:
     - name: Run OWASP Dependency-Check
       run: mvn org.owasp:dependency-check-maven:aggregate || true
 
+
     - name: Generate JaCoCo Coverage Report
-      run: mvn jacoco:report 
+      run: mvn verify
+
 
     - name: Upload CI Reports
       if: always()
@@ -50,7 +52,7 @@ jobs:
           target/spotbugsXml.xml
           target/checkstyle-result.xml
           target/dependency-check-report.html
-          target/jacoco-html/index.html
+          target/site/jacoco/index.html
 
     - name: SonarQube Scan
       env:
@@ -87,7 +89,7 @@ jobs:
           Hello,
           The Java CI pipeline has completed. Please find the reports and SonarQube dashboard below:
           - SonarQube Dashboard: https://sonarcloud.io/project/overview?id=mahek320_java-ci-code-quality
-          - SpotBugs, Checkstyle, and Dependency-Check reports are attached.
+          - SpotBugs, Checkstyle, and OWASP Dependency-Check reports are attached.
           Regards,
           GitHub Actions
         attachments: |
