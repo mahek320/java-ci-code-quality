@@ -53,7 +53,7 @@
 |--------------------|-----------------------------------|
 | `SONAR_TOKEN`      | Token for SonarCloud authentication (Go to SonarCloud > My Account > Security, generate a token, and add it to GitHub secrets as SONAR_TOKEN) |
 | `SENDER_MAIL`      | Email ID for sending notifications |
-| `SENDER_PASSWORD`  | App password for email sender     |
+| `SENDER_PASSWORD`  | App password for email sender (Enable 2-Step Verification in Google Account > Security, generate an App Password under "App Passwords", and save it in GitHub secrets as SENDER_PASSWORD)    |
 | `RECEIVER_MAIL`    | Target email address              |
 
 ## 📊 Reports & Dashboard
