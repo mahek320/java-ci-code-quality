@@ -67,4 +67,10 @@
 
 ## 📬 Email Notification
 
-Once the pipel
+Once the pipeline completes, you will receive an email containing:
+- 📎 Reports (Checkstyle, SpotBugs, OWASP, JaCoCo)
+- 🔗 Link to the SonarCloud dashboard  
+
+---
+
+Feel free to [explore the repository](https://github.com/mahek320/java-ci-code-quality) or open issues and contribute!
