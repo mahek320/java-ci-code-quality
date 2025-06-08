@@ -40,6 +40,21 @@
 12. **Send Email Notification with Reports**
 
 ---
+## ✅ SonarCloud Setup
+
+> **Pre-requisites:**
+> - Create a [SonarCloud](https://sonarcloud.io) account
+> - Generate a `SONAR_TOKEN`
+> - Add the token to your GitHub repository secrets
+
+### Required Secrets
+
+| Secret Name        | Description                       |
+|--------------------|-----------------------------------|
+| `SONAR_TOKEN`      | Token for SonarCloud authentication |
+| `SENDER_MAIL`      | Email ID for sending notifications |
+| `SENDER_PASSWORD`  | App password for email sender     |
+| `RECEIVER_MAIL`    | Target email address              |
 
 ## 📊 Reports & Dashboard
 
