@@ -51,7 +51,7 @@
 
 | Secret Name        | Description                       |
 |--------------------|-----------------------------------|
-| `SONAR_TOKEN`      | Token for SonarCloud authentication |
+| `SONAR_TOKEN`      | Token for SonarCloud authentication (Go to SonarCloud > My Account > Security, generate a token, and add it to GitHub secrets as SONAR_TOKEN) |
 | `SENDER_MAIL`      | Email ID for sending notifications |
 | `SENDER_PASSWORD`  | App password for email sender     |
 | `RECEIVER_MAIL`    | Target email address              |
