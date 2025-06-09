@@ -89,21 +89,6 @@ Once the pipeline completes, you will receive an email containing:
 - 📎 Reports (Checkstyle, SpotBugs, OWASP, JaCoCo)
 - 🔗 Link to the SonarCloud dashboard  
 
-## 🧭 CI Pipeline Overview
-
-```mermaid
-graph TD;
-    Checkout-->Setup_Java;
-    Setup_Java-->Build_and_Test;
-    Build_and_Test-->Checkstyle;
-    Checkstyle-->SpotBugs;
-    SpotBugs-->OWASP;
-    OWASP-->JaCoCo;
-    JaCoCo-->SonarCloud;
-    SonarCloud-->Email_Report;
-
-
----
 
 Feel free to [explore the repository](https://github.com/mahek320/java-ci-code-quality) or open issues and contribute!
 
